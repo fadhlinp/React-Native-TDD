@@ -37,28 +37,28 @@ describe('HomeScreen', () => {
       const wrapper = render(<HomeScreen />);
       wrapper.getByText('Tuesday');
     });
+  });
 
-    it('Should contain a section to get current weather', () => {
-      (WeatherCurrent as jest.Mock).mockReturnValue(
-        <View testID="mock-weather-current" />,
-      );
+  it('Should contain a section to get current weather', () => {
+    (WeatherCurrent as jest.Mock).mockReturnValue(
+      <View testID="mock-weather-current" />,
+    );
 
-      const wrapper = render(<HomeScreen />);
-      wrapper.getByTestId('mock-weather-current');
-    });
+    const wrapper = render(<HomeScreen />);
+    wrapper.getByTestId('mock-weather-current');
+  });
 
-    it('Should contain a divider text', () => {
-      const wrapper = render(<HomeScreen />);
-      wrapper.getByTestId('divider-text');
-    });
+  it('Should contain a divider text', () => {
+    const wrapper = render(<HomeScreen />);
+    wrapper.getByTestId('divider-text');
+  });
 
-    it('Should contain a section to get weather at given coordinates', () => {
-      (WeatherCoordinates as jest.Mock).mockReturnValue(
-        <View testID="mock-weather-coordinates" />,
-      );
+  it('Should contain a section to get weather at given coordinates', () => {
+    (WeatherCoordinates as jest.Mock).mockReturnValue(
+      <View testID="mock-weather-coordinates" />,
+    );
 
-      const wrapper = render(<HomeScreen />);
-      wrapper.getByTestId('mock-weather-coordinates');
-    });
+    const wrapper = render(<HomeScreen />);
+    wrapper.getByTestId('mock-weather-coordinates');
   });
 });
