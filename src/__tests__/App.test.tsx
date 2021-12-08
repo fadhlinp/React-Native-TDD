@@ -5,8 +5,8 @@ import App from '../App';
 import HomeScreen from '../screens/HomeScreen';
 import WeatherScreen from '../screens/WeatherScreen';
 import { useNavigation } from '@react-navigation/core';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../types';
+
+import { AppStackProp } from '../types';
 
 jest.mock('../screens/HomeScreen.tsx', () => jest.fn());
 jest.mock('../screens/WeatherScreen.tsx', () => jest.fn());
@@ -22,11 +22,10 @@ describe('AppNavigator', () => {
 
   it('Should render WeatherScreen on "Weather" route', async () => {
     (HomeScreen as jest.Mock).mockImplementationOnce(() => {
-      type Props = StackNavigationProp<RootStackParamList, 'Home'>;
-      const navigation = useNavigation<Props>();
+      const navigation = useNavigation<AppStackProp>();
 
       useEffect(() => {
-        navigation.navigate('Weather');
+        navigation.navigate('Weather', { latitude: 0, longitude: 0 });
       }, [navigation]);
 
       return null;

@@ -30,7 +30,9 @@ const Button = (props: Props) => {
             color={Colors.WHITE}
           />
         ) : (
-          <Text style={styles.label}>{label}</Text>
+          <Text testID="label" style={styles.label}>
+            {label}
+          </Text>
         )}
       </LinearGradient>
     </TouchableOpacity>
