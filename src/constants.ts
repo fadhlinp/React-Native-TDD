@@ -6,4 +6,5 @@ export enum Colors {
   DARK_GRAY = '#595C66',
   DANKER_GRAY = '#2C2D35',
   ERROR = '#d60a0a',
+  TRANSPARENT = 'transparent',
 }

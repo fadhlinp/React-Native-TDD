@@ -6,3 +6,9 @@ export type RootStackParamList = {
 };
 
 export type AppStackProp = StackNavigationProp<RootStackParamList>;
+export type AppStackProp1 = StackNavigationProp<RootStackParamList>;
+
+export type FormValues = {
+  latitude: number;
+  longitude: number;
+};
