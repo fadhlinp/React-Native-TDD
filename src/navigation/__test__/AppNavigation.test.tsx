@@ -33,7 +33,7 @@ describe('AppNavigation', () => {
       return null;
     });
 
-    (WeatherScreen as jest.Mock).mockReturnValueOnce(
+    (WeatherScreen as unknown as jest.Mock).mockReturnValueOnce(
       <View testID="mock-weather-screen" />,
     );
     const wrapper = render(<AppNavigation />);
