@@ -9,13 +9,13 @@ import { AppStackProp, FormValues } from '../types';
 import Button from './Button';
 
 const defaultValues: FormValues = {
-  latitude: 0,
-  longitude: 0,
+  latitude: '',
+  longitude: '',
 };
 
 const validationSchema = yup.object().shape({
-  latitude: yup.number().required().min(-90).max(90),
-  longitude: yup.number().required().min(-180).max(180),
+  latitude: yup.number().min(-90).max(90),
+  longitude: yup.number().min(-180).max(180),
 });
 
 const WeatherCoordinates = () => {

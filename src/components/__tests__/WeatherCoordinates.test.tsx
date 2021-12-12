@@ -72,6 +72,9 @@ describe('WheaterCoordinates', () => {
 
       fireEvent.changeText(latitudeField, '-91');
 
+      const button = wrapper.getByTestId('button');
+      fireEvent.press(button);
+
       return expect(
         wrapper.findByText('Latitude must be a valid number'),
       ).resolves.toBeDefined();
@@ -83,6 +86,9 @@ describe('WheaterCoordinates', () => {
 
       fireEvent.changeText(latitudeField, '91');
 
+      const button = wrapper.getByTestId('button');
+      fireEvent.press(button);
+
       return expect(
         wrapper.findByText('Latitude must be a valid number'),
       ).resolves.toBeDefined();
@@ -93,6 +99,9 @@ describe('WheaterCoordinates', () => {
       const latitudeField = wrapper.getByTestId('weather-coordinate-latitude');
 
       fireEvent.changeText(latitudeField, 'a');
+
+      const button = wrapper.getByTestId('button');
+      fireEvent.press(button);
 
       return expect(
         wrapper.findByText('Latitude must be a valid number'),
@@ -107,6 +116,9 @@ describe('WheaterCoordinates', () => {
 
       fireEvent.changeText(longitude, '-180');
 
+      const button = wrapper.getByTestId('button');
+      fireEvent.press(button);
+
       return expect(
         wrapper.findByText('Longitude must be a valid number'),
       ).rejects.toThrow();
@@ -117,6 +129,9 @@ describe('WheaterCoordinates', () => {
       const longitude = wrapper.getByTestId('weather-coordinate-longitude');
 
       fireEvent.changeText(longitude, '180');
+
+      const button = wrapper.getByTestId('button');
+      fireEvent.press(button);
 
       return expect(
         wrapper.findByText('Longitude must be a valid number'),
@@ -129,6 +144,9 @@ describe('WheaterCoordinates', () => {
 
       fireEvent.changeText(longitude, '-181');
 
+      const button = wrapper.getByTestId('button');
+      fireEvent.press(button);
+
       return expect(
         wrapper.findByText('Longitude must be a valid number'),
       ).resolves.toBeDefined();
@@ -140,6 +158,9 @@ describe('WheaterCoordinates', () => {
 
       fireEvent.changeText(longitude, '181');
 
+      const button = wrapper.getByTestId('button');
+      fireEvent.press(button);
+
       return expect(
         wrapper.findByText('Longitude must be a valid number'),
       ).resolves.toBeDefined();
@@ -150,6 +171,9 @@ describe('WheaterCoordinates', () => {
       const longitude = wrapper.getByTestId('weather-coordinate-longitude');
 
       fireEvent.changeText(longitude, 'a');
+
+      const button = wrapper.getByTestId('button');
+      fireEvent.press(button);
 
       return expect(
         wrapper.findByText('Longitude must be a valid number'),
