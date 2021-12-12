@@ -1,7 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { View, Text } from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
 import WeatherScreen from '../screens/WeatherScreen';
 import { RootStackParamList } from '../types';

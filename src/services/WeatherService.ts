@@ -4,8 +4,8 @@ import { CurrentWeatherRawResponseDto } from './dto/weather-service.dto';
 
 class WeatherService {
   static async fetchCurrentWeather(
-    lat: number,
-    lon: number,
+    lat: number | string,
+    lon: number | string,
   ): Promise<WeatherType> {
     return axios
       .get<CurrentWeatherRawResponseDto>(
@@ -14,7 +14,7 @@ class WeatherService {
           params: {
             lat,
             lon,
-            appid: '417cf0715db6f7547e7dc4ae4670cd04',
+            appid: 'your_api_key',
             units: 'metric',
           },
         },

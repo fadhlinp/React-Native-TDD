@@ -1,4 +1,5 @@
 import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/core';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -6,6 +7,8 @@ export type RootStackParamList = {
 };
 
 export type AppStackProp = StackNavigationProp<RootStackParamList>;
+
+export type WeatherScreenRouteProp = RouteProp<RootStackParamList, 'Weather'>;
 
 export type FormValues = {
   latitude: number | string;
@@ -21,3 +24,10 @@ export type WeatherType = {
   description: string | null;
   city: string;
 };
+
+export enum Status {
+  START = 'STATUS_START',
+  FAILURE = 'STATUS_FAILURE',
+  SUCCESS = 'STATUS_SUCCESS',
+  LOADING = 'STATUS_LOADING',
+}

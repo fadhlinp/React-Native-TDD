@@ -1,12 +1,186 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+/* eslint-disable @typescript-eslint/ban-types */
+import React, { useEffect } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+  Image,
+} from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/core';
+import { connect } from 'react-redux';
+import { Colors } from '../constants';
+import {
+  AppStackProp,
+  Status,
+  WeatherScreenRouteProp,
+  WeatherType,
+} from '../types';
+import { StateType } from '../store/reducers';
+import { fetchWeather } from '../store/weather/actions';
 
-const WeatherScreen = () => {
+type StateProps = {
+  weather: WeatherType;
+  status: Status;
+  error: string;
+};
+
+type DispatchProps = {
+  fetchWeather: typeof fetchWeather;
+};
+
+type Props = StateProps & DispatchProps;
+
+const WeatherScreen = (props: Props) => {
+  const { fetchWeather, status, error, weather } = props;
+  const route = useRoute<WeatherScreenRouteProp>();
+  const { goBack } = useNavigation<AppStackProp>();
+
+  useEffect(() => {
+    fetchWeather(route.params.latitude, route.params.longitude);
+  }, [fetchWeather, route.params.latitude, route.params.longitude]);
+
   return (
-    <View testID="weather-screen">
-      <Text></Text>
+    <View style={styles.container} testID="weather-screen">
+      <TouchableOpacity
+        testID="button-home"
+        style={styles.back}
+        onPress={goBack}>
+        <Text style={styles.backText}>Home</Text>
+      </TouchableOpacity>
+
+      {status === Status.LOADING && (
+        <ActivityIndicator
+          size="large"
+          color="black"
+          testID="weather-screen-loader"
+        />
+      )}
+
+      {status === Status.FAILURE && <Text style={styles.error}>{error}</Text>}
+
+      {status === Status.SUCCESS && (
+        <>
+          <View style={styles.head}>
+            {weather.icon && (
+              <Image
+                testID="weather-screen-icon"
+                style={styles.icon}
+                source={{ uri: weather.icon }}
+              />
+            )}
+            <Text style={styles.city}>{weather.city}</Text>
+            {weather.description && (
+              <Text
+                testID="weather-screen-description"
+                style={styles.description}>
+                {weather.description}
+              </Text>
+            )}
+          </View>
+          <View style={styles.stats}>
+            <Text style={styles.statsTitle}>Stats</Text>
+            <View
+              testID="weather-screen-temperature"
+              style={[styles.card, styles.cardNegative]}>
+              <Text style={styles.cardTextNegative}>temperature</Text>
+              <Text style={styles.cardTextNegative}>
+                {Math.round(weather.temperature)}°C
+              </Text>
+            </View>
+            <View testID="weather-screen-wind" style={styles.card}>
+              <Text style={styles.cardText}>wind</Text>
+              <Text style={styles.cardText}>{weather.windSpeed}m/s</Text>
+            </View>
+            <View
+              testID="weather-screen-humidity"
+              style={[styles.card, styles.cardNegative]}>
+              <Text style={styles.cardTextNegative}>humidity</Text>
+              <Text style={styles.cardTextNegative}>{weather.humidity}%</Text>
+            </View>
+            <View
+              testID="weather-screen-pressure"
+              style={[styles.card, styles.cardNegative]}>
+              <Text style={styles.cardTextNegative}>pressure</Text>
+              <Text style={styles.cardTextNegative}>
+                {weather.pressure} hPa
+              </Text>
+            </View>
+          </View>
+        </>
+      )}
     </View>
   );
 };
 
-export default WeatherScreen;
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 20,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    backgroundColor: Colors.WHITE,
+  },
+  back: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+  },
+  backText: {
+    fontSize: 24,
+  },
+  error: {
+    color: Colors.ERROR,
+    textAlign: 'center',
+  },
+  head: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  icon: {
+    width: 200,
+    height: 200,
+  },
+  description: {
+    fontSize: 24,
+    textTransform: 'capitalize',
+  },
+  city: {
+    fontSize: 48,
+  },
+  stats: {
+    paddingHorizontal: '10%',
+  },
+  statsTitle: {
+    fontSize: 13,
+    color: Colors.LIGHTER_GRAY,
+    marginBottom: 10,
+  },
+  card: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 15,
+    borderRadius: 10,
+  },
+  cardNegative: {
+    backgroundColor: Colors.BLUE,
+  },
+  cardTextNegative: {
+    color: Colors.WHITE,
+  },
+  cardText: {
+    color: Colors.LIGHTER_GRAY,
+  },
+});
+
+export default connect<StateProps, DispatchProps, {}, StateType>(
+  state => ({
+    status: state.weather.status,
+    weather: state.weather.weather,
+    error: state.weather.error,
+  }),
+  {
+    fetchWeather,
+  },
+)(WeatherScreen);
