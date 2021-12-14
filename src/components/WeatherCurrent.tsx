@@ -1,6 +1,7 @@
 /* eslint-disable no-empty */
 import React, { useState, useCallback } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import Analytics from 'appcenter-analytics';
 
 import LocationService from '../services/LocationService';
 import { AppStackProp } from '../types';
@@ -18,6 +19,9 @@ function WeatherCurrent() {
     setLoading(true);
     try {
       const position = await LocationService.getCurrentPosition();
+      await Analytics.trackEvent(
+        `Fetch Current Weather: ${position.latitude}, ${position.longitude}`,
+      );
       navigation.navigate('Weather', position);
       setLoading(false);
     } catch (err) {
