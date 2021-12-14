@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import { render } from '@testing-library/react-native';
 import HomeScreen from '../HomeScreen';
 import WeatherCurrent from '../../components/WeatherCurrent';
 import WeatherCoordinates from '../../components/WeatherCoordinates';
