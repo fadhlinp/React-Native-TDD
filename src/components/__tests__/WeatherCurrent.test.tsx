@@ -1,6 +1,7 @@
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import { useNavigation } from '@react-navigation/native';
+import { trackEvent } from 'appcenter-analytics';
 import WeatherCurrent from '../WeatherCurrent';
 import LocationService from '../../services/LocationService';
 import { Colors } from '../../constants';
@@ -9,6 +10,13 @@ jest.mock('@react-navigation/native', () => {
   return {
     ...jest.requireActual<object>('@react-navigation/native'),
     useNavigation: jest.fn().mockReturnValue({ navigate: jest.fn() }),
+  };
+});
+
+jest.mock('appcenter-analytics', () => {
+  return {
+    ...jest.requireActual<object>('appcenter-analytics'),
+    trackEvent: jest.fn(),
   };
 });
 
@@ -25,9 +33,12 @@ describe('WeatherCurrent', () => {
 
   it('Should navigate to weather screen with location', async () => {
     const mockNavigate = jest.fn();
+
     (useNavigation as jest.Mock).mockReturnValueOnce({
       navigate: mockNavigate,
     });
+
+    trackEvent('mock-test');
 
     const wrapper = render(<WeatherCurrent />);
     const button = wrapper.getByTestId('weather-current');
