@@ -19,7 +19,7 @@ function WeatherCurrent() {
     setLoading(true);
     try {
       const position = await LocationService.getCurrentPosition();
-      await Analytics.trackEvent(
+      Analytics.trackEvent(
         `Fetch Current Weather: ${position.latitude}, ${position.longitude}`,
       );
       navigation.navigate('Weather', position);
